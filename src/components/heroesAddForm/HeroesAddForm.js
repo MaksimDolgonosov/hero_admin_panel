@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
 import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import { heroesFetched, heroesFetchingError } from "../../actions";
+import { heroesFetched } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useHttp } from "../../hooks/http.hook";
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -16,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 const HeroesAddForm = () => {
     const heroes = useSelector(state => state.heroes)
     const dispatch = useDispatch();
+    const { request } = useHttp();
+
     const formik = useFormik({
         initialValues: {
             name: "", description: "", element: ""
@@ -27,10 +30,17 @@ const HeroesAddForm = () => {
         }),
         onSubmit: values => {
             const id = uuidv4();
-            const newHerro = { id: id, ...values, };
-            heroes.push(newHerro);
-            console.log(heroes);
-            dispatch(heroesFetched(heroes));
+            const newHerro = { id: id, ...values };
+            const data = [...heroes, newHerro]
+            dispatch(heroesFetched(data));
+            request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
+
+            // dispatch(heroesFetching());
+            // request("http://localhost:3001/heroes")
+            //     .then(data => dispatch(heroesFetched(data)))
+            //     .catch(() => dispatch(heroesFetchingError()))
+            // const data = [...heroes, newHerro]
+            // dispatch(heroesFetched(data));
 
         },
     })
