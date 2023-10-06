@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { heroesFetched } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
+
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -16,8 +17,36 @@ import { useHttp } from "../../hooks/http.hook";
 
 const HeroesAddForm = () => {
     const heroes = useSelector(state => state.heroes)
+    const filters = useSelector(state => state.filters);
     const dispatch = useDispatch();
     const { request } = useHttp();
+
+    const options = filters.map((filter,i) => {
+        switch (filter) {
+            case "fire":
+                return (
+                    <option key={i} value="fire">Огонь</option>
+                )
+            case "water":
+                return (
+                    <option key={i} value="water">Вода</option>
+                )
+            case "wind":
+                return (
+                    <option key={i} value="wind">Ветер</option>
+                )
+            case "earth":
+                return (
+                    <option key={i} value="earth">Земля</option>
+                )
+            default:
+                return null
+        }
+
+
+    })
+    // request("http://localhost:3001/filters")
+    //     .then(data => <Options >)
 
     const formik = useFormik({
         initialValues: {
@@ -87,10 +116,11 @@ const HeroesAddForm = () => {
                     value={formik.values.element}
                     onBlur={formik.handleBlur} as="select">
                     <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
+                    {/* <option value="fire">Огонь</option>
                     <option value="water">Вода</option>
                     <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    <option value="earth">Земля</option> */}
+                   {options}
                 </select>
             </div>
 
@@ -98,5 +128,6 @@ const HeroesAddForm = () => {
         </form>
     )
 }
+
 
 export default HeroesAddForm;

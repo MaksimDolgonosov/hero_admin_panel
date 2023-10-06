@@ -16,3 +16,10 @@ export const heroesFetchingError = () => {
         type: 'HEROES_FETCHING_ERROR'
     }
 }
+
+export const filtersInForm = (filters) => {
+    return {
+        type: 'FILTERS_FORM',
+        filters: filters
+    }
+}

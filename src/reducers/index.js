@@ -22,6 +22,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
+        case 'FILTERS_FORM':
+            return {
+                ...state,
+                filters: action.filters
+            }
         default: return state
     }
 }
