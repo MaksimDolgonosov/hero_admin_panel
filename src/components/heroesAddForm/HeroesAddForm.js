@@ -45,8 +45,6 @@ const HeroesAddForm = () => {
 
 
     })
-    // request("http://localhost:3001/filters")
-    //     .then(data => <Options >)
 
     const formik = useFormik({
         initialValues: {
@@ -63,14 +61,7 @@ const HeroesAddForm = () => {
             const data = [...heroes, newHerro]
             dispatch(heroesFetched(data));
             request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
-
-            // dispatch(heroesFetching());
-            // request("http://localhost:3001/heroes")
-            //     .then(data => dispatch(heroesFetched(data)))
-            //     .catch(() => dispatch(heroesFetchingError()))
-            // const data = [...heroes, newHerro]
-            // dispatch(heroesFetched(data));
-
+            formik.handleReset();
         },
     })
 
