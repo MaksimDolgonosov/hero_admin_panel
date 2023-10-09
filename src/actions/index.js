@@ -23,3 +23,10 @@ export const filtersInForm = (filters) => {
         filters: filters
     }
 }
+
+export const activeFilter = (filter) => {
+    return {
+        type: 'ACTIVE_FILTER',
+        payload: filter
+    }
+}

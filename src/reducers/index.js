@@ -1,7 +1,8 @@
 const initialState = {
     heroes: [],
     heroesLoadingStatus: 'idle',
-    filters: []
+    filters: [],
+    activeFilter: 'all',
 }
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +27,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filters: action.filters
+            }
+        case 'ACTIVE_FILTER':
+            return {
+                ...state,
+                activeFilter: action.payload
             }
         default: return state
     }

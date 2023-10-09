@@ -18,10 +18,11 @@ import { useHttp } from "../../hooks/http.hook";
 const HeroesAddForm = () => {
     const heroes = useSelector(state => state.heroes)
     const filters = useSelector(state => state.filters);
+    const activeFilter = useSelector(state => state.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
 
-    const options = filters.map((filter,i) => {
+    const options = filters.map((filter, i) => {
         switch (filter) {
             case "fire":
                 return (
@@ -59,7 +60,10 @@ const HeroesAddForm = () => {
         onSubmit: values => {
             const id = uuidv4();
             const newHerro = { id: id, ...values };
-            const data = [...heroes, newHerro]
+            const data = [...heroes, newHerro].filter(hero => {
+                return hero.element === activeFilter;
+            });
+
             dispatch(heroesFetched(data));
             request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
 
@@ -113,7 +117,7 @@ const HeroesAddForm = () => {
                     <option value="water">Вода</option>
                     <option value="wind">Ветер</option>
                     <option value="earth">Земля</option> */}
-                   {options}
+                    {options}
                 </select>
             </div>
 
