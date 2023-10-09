@@ -1,12 +1,6 @@
 {
   "heroes": [
     {
-      "id": 1,
-      "name": "Первый герой",
-      "description": "Первый герой в рейтинге!",
-      "element": "fire"
-    },
-    {
       "id": 2,
       "name": "Неизвестный герой",
       "description": "Скрывающийся в тени",
@@ -17,6 +11,12 @@
       "name": "Морской герой",
       "description": "Как аквамен, но не из DC",
       "element": "water"
+    },
+    {
+      "id": "d70ac556-1449-427c-be5d-20d858ddfbcd",
+      "name": "Какой то герой",
+      "description": "Плавает",
+      "element": "fire"
     }
   ],
   "filters": [

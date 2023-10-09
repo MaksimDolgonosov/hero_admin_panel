@@ -6,6 +6,7 @@ import { heroesFetching, heroesFetched, heroesFetchingError, filtersInForm } fro
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
+import { AnimatePresence } from 'framer-motion';
 // Задача для этого компонента:
 // При клике на "крестик" идет удаление персонажа из общего состояния
 // Усложненная задача:
@@ -21,9 +22,9 @@ const HeroesList = () => {
         request("http://localhost:3001/heroes")
             .then(data => dispatch(heroesFetched(data)))
             .catch(() => dispatch(heroesFetchingError()))
-            request("http://localhost:3001/filters")
+        request("http://localhost:3001/filters")
             .then(data => dispatch(filtersInForm(data.slice(1))))
-            //.catch(() => dispatch(heroesFetchingError()))
+        //.catch(() => dispatch(heroesFetchingError()))
         // eslint-disable-next-line
     }, []);
 
@@ -38,9 +39,14 @@ const HeroesList = () => {
             return <h5 className="text-center mt-5">Героев пока нет</h5>
         }
 
-        return arr.map(({ id, ...props }) => {
-            return <HeroesListItem key={id} {...props} id={id}/>
-        })
+        return (
+            <AnimatePresence>
+                {arr.map(({ id, ...props }) => {
+                    return <HeroesListItem key={id} {...props} id={id} />
+                })}
+            </AnimatePresence>
+        )
+
     }
 
     const elements = renderHeroesList(heroes);

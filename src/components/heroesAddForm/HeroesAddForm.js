@@ -46,6 +46,7 @@ const HeroesAddForm = () => {
 
     })
 
+
     const formik = useFormik({
         initialValues: {
             name: "", description: "", element: ""
@@ -61,6 +62,7 @@ const HeroesAddForm = () => {
             const data = [...heroes, newHerro]
             dispatch(heroesFetched(data));
             request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
+
             formik.handleReset();
         },
     })
