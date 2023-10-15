@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import { heroesFetched } from "../../actions";
+import { heroesFetched , heroesFetching} from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -60,7 +60,8 @@ const HeroesAddForm = () => {
         onSubmit: values => {
             const id = uuidv4();
             const newHerro = { id: id, ...values };
-            const data = [...heroes, newHerro].filter(hero => {
+
+            const data = activeFilter === "all" ? [...heroes, newHerro] : [...heroes, newHerro].filter(hero => {
                 return hero.element === activeFilter;
             });
 

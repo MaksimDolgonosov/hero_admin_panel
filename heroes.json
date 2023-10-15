@@ -17,6 +17,12 @@
       "name": "Какой то герой",
       "description": "Плавает",
       "element": "fire"
+    },
+    {
+      "id": "3e8f673f-db14-4531-8d76-4e1e3f10c1e9",
+      "name": "Maksim",
+      "description": "ffffffffffff",
+      "element": "earth"
     }
   ],
   "filters": [

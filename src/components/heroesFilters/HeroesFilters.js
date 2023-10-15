@@ -8,7 +8,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { heroesFetched } from "../../actions";
 import { useHttp } from "../../hooks/http.hook";
-import { useState } from "react";
+//import { useState } from "react";
 import { activeFilter } from "../../actions";
 //const classNames = require('classnames');
 
@@ -32,7 +32,7 @@ const HeroesFilters = () => {
                 }
 
             })
-            .then(data => dispatch(heroesFetched(data)))   
+            .then(data => dispatch(heroesFetched(data)))
     }
     // const btnActive = classNames({
     //     'active': activeButton === this.getAttribute("data-filter"),
