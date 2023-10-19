@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import { heroesFetched , heroesFetching} from "../../actions";
+import { heroesFetched } from "../../reducers/heroes";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -16,9 +16,10 @@ import { useHttp } from "../../hooks/http.hook";
 // данных из фильтров
 
 const HeroesAddForm = () => {
-    const heroes = useSelector(state => state.heroes)
-    const filters = useSelector(state => state.filters);
-    const activeFilter = useSelector(state => state.activeFilter);
+    
+    const heroes = useSelector(state => state.heroes.heroes)
+    const filters = useSelector(state => state.filters.filters);
+    const activeFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
 

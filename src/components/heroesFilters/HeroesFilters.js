@@ -6,10 +6,10 @@
 // Изменять json-файл для удобства МОЖНО!
 // Представьте, что вы попросили бэкенд-разработчика об этом
 import { useDispatch, useSelector } from "react-redux";
-import { heroesFetched } from "../../actions";
+import { heroesFetched } from "../../reducers/heroes";
 import { useHttp } from "../../hooks/http.hook";
 //import { useState } from "react";
-import { activeFilter } from "../../actions";
+import { activeFilter } from "../../reducers/filters";
 //const classNames = require('classnames');
 
 const HeroesFilters = () => {

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
-import { heroesFetched } from "../../actions";
+import { heroesFetched } from "../../reducers/heroes";
 import { motion } from "framer-motion"
 //import {motion} from 'framer-motion/dist/es/index'
 const HeroesListItem = ({ name, description, element, id }) => {
-    const heroes = useSelector(state => state.heroes);
+    const heroes = useSelector(state => state.heroes.heroes);
     const dispatch = useDispatch();
     const { request } = useHttp();
 

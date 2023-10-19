@@ -1,37 +1,37 @@
-import { createAction } from "@reduxjs/toolkit"
+// import { createAction } from "@reduxjs/toolkit"
 
 
-export const heroesFetching = () => {
-    return {
-        type: 'HEROES_FETCHING'
-    }
-}
-
-// export const heroesFetched = (heroes) => {
+// export const heroesFetching = () => {
 //     return {
-//         type: 'HEROES_FETCHED',
-//         payload: heroes
+//         type: 'HEROES_FETCHING'
 //     }
 // }
 
-export const heroesFetched = createAction('HEROES_FETCHED');
+// // export const heroesFetched = (heroes) => {
+// //     return {
+// //         type: 'HEROES_FETCHED',
+// //         payload: heroes
+// //     }
+// // }
 
-export const heroesFetchingError = () => {
-    return {
-        type: 'HEROES_FETCHING_ERROR'
-    }
-}
+// export const heroesFetched = createAction('HEROES_FETCHED');
 
-export const filtersInForm = (filters) => {
-    return {
-        type: 'FILTERS_FORM',
-        filters: filters
-    }
-}
+// export const heroesFetchingError = () => {
+//     return {
+//         type: 'HEROES_FETCHING_ERROR'
+//     }
+// }
 
-export const activeFilter = (filter) => {
-    return {
-        type: 'ACTIVE_FILTER',
-        payload: filter
-    }
-}
+// export const filtersInForm = (filters) => {
+//     return {
+//         type: 'FILTERS_FORM',
+//         payload: filters
+//     }
+// }
+
+// export const activeFilter = (filter) => {
+//     return {
+//         type: 'ACTIVE_FILTER',
+//         payload: filter
+//     }
+// }
