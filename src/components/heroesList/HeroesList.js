@@ -1,9 +1,10 @@
-import { useHttp } from '../../hooks/http.hook';
+//import { useHttp } from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { heroesFetching, heroesFetched, heroesFetchingError, } from '../../reducers/heroes';
-import {filtersInForm } from '../../reducers/filters';
+// eslint-disable-next-line
+import { heroesFetching, heroesFetched, heroesFetchingError, fetchHeroes } from '../../reducers/heroes';
+// eslint-disable-next-line
+import { filtersInForm, filterHeroes } from '../../reducers/filters';
 
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
@@ -17,15 +18,19 @@ import { AnimatePresence } from 'framer-motion';
 const HeroesList = () => {
     const { heroes, heroesLoadingStatus } = useSelector(state => state.heroes);
     const dispatch = useDispatch();
-    const { request } = useHttp();
+   // const { request } = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
-        request("http://localhost:3001/filters")
-            .then(data => dispatch(filtersInForm(data.slice(1))))
+        // dispatch(heroesFetching());
+        dispatch(fetchHeroes());
+        dispatch(filterHeroes())
+        // request("http://localhost:3001/heroes")
+        //     .then(data => dispatch(heroesFetched(data)))
+        //     .catch(() => dispatch(heroesFetchingError()))
+        // request("http://localhost:3001/filters")
+        //     .then(data => dispatch(filtersInForm(data.slice(1))))
+
+
         //.catch(() => dispatch(heroesFetchingError()))
         // eslint-disable-next-line
     }, []);

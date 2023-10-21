@@ -1,8 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useHttp } from "../hooks/http.hook"
+
 const initialState = {
     filters: [],
     activeFilter: 'all',
 }
+
+export const filterHeroes = createAsyncThunk(
+    "filters/fetchFilters",
+    () => {
+        const { request } = useHttp();
+        return request("http://localhost:3001/filters")
+    }
+)
 
 const filtersSlice = createSlice({
     name: "filters",
@@ -11,6 +21,11 @@ const filtersSlice = createSlice({
         filtersInForm: (state, action) => { state.filters = action.payload },
         activeFilter: (state, action) => { state.activeFilter = action.payload },
 
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(filterHeroes.fulfilled, (state, action) => { state.filters = action.payload.slice(1) })
+            .addCase(filterHeroes.rejected, (state) => { state.filters = "no filter data" })
     }
 })
 export default filtersSlice.reducer;
