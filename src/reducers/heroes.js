@@ -1,13 +1,32 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { useHttp } from "../hooks/http.hook"
-const initialState = {
-    heroes: [],
-    heroesLoadingStatus: 'idle',
-    // filters: [],
-    // activeFilter: 'all',
-}
+import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit"
+import { useHttp } from "../hooks/http.hook";
 
-export  const fetchHeroes = createAsyncThunk(
+
+const heroesAdapter = createEntityAdapter(
+    {
+        //     heroes: [],
+        //     heroesLoadingStatus: 'idle',
+        //     // filters: [],
+        //     // activeFilter: 'all',
+        } 
+);
+const initialState = heroesAdapter.getInitialState(
+    {
+        //     heroes: [],
+        //     heroesLoadingStatus: 'idle',
+        //     // filters: [],
+        //     // activeFilter: 'all',
+        }
+)
+console.log(initialState)
+// const initialState = {
+//     heroes: [],
+//     heroesLoadingStatus: 'idle',
+//     // filters: [],
+//     // activeFilter: 'all',
+// }
+
+export const fetchHeroes = createAsyncThunk(
     "heroes/fetchHeroes",
     async () => {
         const { request } = useHttp();
