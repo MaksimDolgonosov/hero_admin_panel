@@ -3,7 +3,7 @@ import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 // eslint-disable-next-line
 import { heroesFetched, selectAll, heroesAdd } from "../../reducers/heroes";
-//import { selectAll as selectAllFilters } from "../../reducers/filters";
+import { selectAll as selectAllFilters } from "../../reducers/filters";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -21,14 +21,14 @@ const HeroesAddForm = () => {
     const heroes = useSelector(selectAll);
     //const heroes = useSelector(state => state.heroes.heroes);
 
-    //const filters = useSelector(selectAllFilters);
-    const filters = useSelector(state => state.filters.filters);
+    const filters = useSelector(selectAllFilters);
+
+    //const filters = useSelector(state => state.filters.filters);
     const activeFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
-    console.log(filters)
     const options = filters.map((filter, i) => {
-        switch (filter) {
+        switch (filter.name) {
             case "fire":
                 return (
                     <option key={i} value="fire">Огонь</option>

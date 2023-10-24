@@ -13,7 +13,7 @@ import { activeFilter } from "../../reducers/filters";
 //const classNames = require('classnames');
 
 const HeroesFilters = () => {
-    const currentFilter = useSelector(state => state.activeFilter);
+    const currentFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
     // const [active, setActive]= useState("all");

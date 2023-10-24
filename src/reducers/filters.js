@@ -7,9 +7,6 @@ const initialState = filterAdapter.getInitialState({
     filters: []
 })
 
-console.log(initialState)
-
-
 
 // const initialState = {
 //     filters: [],
@@ -34,13 +31,13 @@ const filtersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            //.addCase(filterHeroes.fulfilled, (state, action) => { filterAdapter.setAll(state, action.payload.slice(1)) })
-             .addCase(filterHeroes.fulfilled, (state, action) => { state.filters = action.payload.slice(1) })
+            .addCase(filterHeroes.fulfilled, (state, action) => { filterAdapter.setAll(state, action.payload.slice(1)) })
+             //.addCase(filterHeroes.fulfilled, (state, action) => { state.filters = action.payload.slice(1) })
             .addCase(filterHeroes.rejected, (state) => { state.filters = "no filter data" })
     }
 })
 
-export const { selectTotal } = filterAdapter.getSelectors(state => state.filters);
+export const { selectAll } = filterAdapter.getSelectors(state => state.filters);
 export default filtersSlice.reducer;
 export const { filtersInForm, activeFilter } = filtersSlice.actions;
 // const initialState = {

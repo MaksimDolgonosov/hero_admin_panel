@@ -16,3 +16,12 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+
+// "filters": [
+//   "all",
+//   "fire",
+//   "water",
+//   "wind",
+//   "earth"
+// ]
+
