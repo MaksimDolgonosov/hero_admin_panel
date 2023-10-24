@@ -2,10 +2,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line
-import { heroesFetching, heroesFetched, heroesFetchingError, fetchHeroes } from '../../reducers/heroes';
+import { heroesFetching, heroesFetched, heroesFetchingError, fetchHeroes, selectAll } from '../../reducers/heroes';
 // eslint-disable-next-line
 import { filtersInForm, filterHeroes } from '../../reducers/filters';
-
+import { createSelector } from '@reduxjs/toolkit';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -16,9 +16,25 @@ import { AnimatePresence } from 'framer-motion';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
-    const { heroes, heroesLoadingStatus } = useSelector(state => state.heroes);
+    //const { heroes, heroesLoadingStatus } = useSelector(state => state.heroes);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
-   // const { request } = useHttp();
+    // const { request } = useHttp();
+    const heroesSelector = createSelector(
+        selectAll,
+        //state => state.heroes.heroes,
+        state => state.filters.activeFilter,
+        (heroes, filter) => {
+            if (filter === "all") {
+                return heroes;
+            } else {
+                return heroes.filter(item => item.element === filter)
+            }
+        }
+    )
+    
+
+    const heroes = useSelector(heroesSelector);
 
     useEffect(() => {
         // dispatch(heroesFetching());
@@ -56,7 +72,7 @@ const HeroesList = () => {
 
     }
 
-    const elements = renderHeroesList(heroes);
+     const elements = renderHeroesList(heroes);
     return (
         <ul>
             {elements}

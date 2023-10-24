@@ -2,23 +2,15 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/too
 import { useHttp } from "../hooks/http.hook";
 
 
-const heroesAdapter = createEntityAdapter(
-    {
-        //     heroes: [],
-        //     heroesLoadingStatus: 'idle',
-        //     // filters: [],
-        //     // activeFilter: 'all',
-        } 
-);
+const heroesAdapter = createEntityAdapter();
 const initialState = heroesAdapter.getInitialState(
     {
-        //     heroes: [],
-        //     heroesLoadingStatus: 'idle',
-        //     // filters: [],
-        //     // activeFilter: 'all',
-        }
+       // heroes: [],
+        heroesLoadingStatus: 'idle',
+    }
 )
-console.log(initialState)
+
+
 // const initialState = {
 //     heroes: [],
 //     heroesLoadingStatus: 'idle',
@@ -42,9 +34,14 @@ const heroesSlice = createSlice({
         heroesFetching: state => { state.heroesLoadingStatus = 'loading' },
         heroesFetched: (state, action) => {
             state.heroesLoadingStatus = 'idle';
-            state.heroes = action.payload;
+            heroesAdapter.setAll(state, action.payload);
+           // state.heroes = action.payload;
         },
         heroesFetchingError: state => { state.heroesLoadingStatus = 'error' },
+        heroesAdd: (state, action) => {
+            heroesAdapter.addOne(state, action.payload);
+           // state.heroes = action.payload;
+        },
 
     },
     extraReducers: (builder) => {
@@ -52,15 +49,16 @@ const heroesSlice = createSlice({
             .addCase(fetchHeroes.pending, state => { state.heroesLoadingStatus = 'loading' })
             .addCase(fetchHeroes.fulfilled, (state, action) => {
                 state.heroesLoadingStatus = 'idle';
-                state.heroes = action.payload;
+                heroesAdapter.setAll(state, action.payload);
+                //state.heroes = action.payload;
             })
             .addCase(fetchHeroes.rejected, state => { state.heroesLoadingStatus = 'error' })
             .addDefaultCase(() => { })
     }
 })
-
+export const {selectAll} = heroesAdapter.getSelectors(state=>state.heroes);
 export default heroesSlice.reducer;
-export const { heroesFetching, heroesFetched, heroesFetchingError } = heroesSlice.actions;
+export const { heroesFetching, heroesFetched, heroesFetchingError, heroesAdd } = heroesSlice.actions;
 
 
 // const initialState = {

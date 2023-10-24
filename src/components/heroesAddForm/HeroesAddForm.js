@@ -1,7 +1,9 @@
 import { useFormik } from "formik";
 import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import { heroesFetched } from "../../reducers/heroes";
+// eslint-disable-next-line
+import { heroesFetched, selectAll, heroesAdd } from "../../reducers/heroes";
+//import { selectAll as selectAllFilters } from "../../reducers/filters";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
 
@@ -16,13 +18,15 @@ import { useHttp } from "../../hooks/http.hook";
 // данных из фильтров
 
 const HeroesAddForm = () => {
-    
-    const heroes = useSelector(state => state.heroes.heroes)
+    const heroes = useSelector(selectAll);
+    //const heroes = useSelector(state => state.heroes.heroes);
+
+    //const filters = useSelector(selectAllFilters);
     const filters = useSelector(state => state.filters.filters);
     const activeFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
-
+    console.log(filters)
     const options = filters.map((filter, i) => {
         switch (filter) {
             case "fire":
@@ -65,7 +69,7 @@ const HeroesAddForm = () => {
             const data = activeFilter === "all" ? [...heroes, newHerro] : [...heroes, newHerro].filter(hero => {
                 return hero.element === activeFilter;
             });
-
+            // dispatch(heroesAdd(newHerro));
             dispatch(heroesFetched(data));
             request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
 
