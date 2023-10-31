@@ -6,7 +6,7 @@ import { heroesFetched, selectAll, heroesAdd } from "../../reducers/heroes";
 import { selectAll as selectAllFilters } from "../../reducers/filters";
 import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/http.hook";
-
+import { useCreateHeroMutation } from "../api/apiSlice";
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -20,10 +20,10 @@ import { useHttp } from "../../hooks/http.hook";
 const HeroesAddForm = () => {
     const heroes = useSelector(selectAll);
     //const heroes = useSelector(state => state.heroes.heroes);
-
+    const [newHerroItem] = useCreateHeroMutation();
     const filters = useSelector(selectAllFilters);
 
-    //const filters = useSelector(state => state.filters.filters);
+   // const filters = useSelector(state => state.filters.filters);
     const activeFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
     const { request } = useHttp();
@@ -66,13 +66,15 @@ const HeroesAddForm = () => {
             const id = uuidv4();
             const newHerro = { id: id, ...values };
 
+
+
             const data = activeFilter === "all" ? [...heroes, newHerro] : [...heroes, newHerro].filter(hero => {
                 return hero.element === activeFilter;
             });
-            // dispatch(heroesAdd(newHerro));
+            // // dispatch(heroesAdd(newHerro));
             dispatch(heroesFetched(data));
-            request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
-
+            // request("http://localhost:3001/heroes", "POST", JSON.stringify(newHerro));
+            newHerroItem(newHerro).unwrap();
             formik.handleReset();
         },
     })
