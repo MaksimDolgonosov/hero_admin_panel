@@ -10,16 +10,26 @@ import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
 import { AnimatePresence } from 'framer-motion';
+
+
+import { useGetHeroesQuery } from '../api/apiSlice';
 // Задача для этого компонента:
 // При клике на "крестик" идет удаление персонажа из общего состояния
 // Усложненная задача:
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
+
+    const { data: heroes = [], isFetching, isLoading, isError } = useGetHeroesQuery();
+
+
+
+
     //const { heroes, heroesLoadingStatus } = useSelector(state => state.heroes);
-    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
-    const dispatch = useDispatch();
+   // const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
+   // const dispatch = useDispatch();
     // const { request } = useHttp();
+
     const heroesSelector = createSelector(
         selectAll,
         //state => state.heroes.heroes,
@@ -32,28 +42,28 @@ const HeroesList = () => {
             }
         }
     )
-    
-
-    const heroes = useSelector(heroesSelector);
-
-    useEffect(() => {
-        // dispatch(heroesFetching());
-        dispatch(fetchHeroes());
-        dispatch(filterHeroes())
-        // request("http://localhost:3001/heroes")
-        //     .then(data => dispatch(heroesFetched(data)))
-        //     .catch(() => dispatch(heroesFetchingError()))
-        // request("http://localhost:3001/filters")
-        //     .then(data => dispatch(filtersInForm(data.slice(1))))
 
 
-        //.catch(() => dispatch(heroesFetchingError()))
-        // eslint-disable-next-line
-    }, []);
+    // const heroes = useSelector(heroesSelector);
 
-    if (heroesLoadingStatus === "loading") {
+    // useEffect(() => {
+    //     // dispatch(heroesFetching());
+    //     dispatch(fetchHeroes());
+    //     dispatch(filterHeroes())
+    //     // request("http://localhost:3001/heroes")
+    //     //     .then(data => dispatch(heroesFetched(data)))
+    //     //     .catch(() => dispatch(heroesFetchingError()))
+    //     // request("http://localhost:3001/filters")
+    //     //     .then(data => dispatch(filtersInForm(data.slice(1))))
+
+
+    //     //.catch(() => dispatch(heroesFetchingError()))
+    //     // eslint-disable-next-line
+    // }, []);
+
+    if ( isLoading ||  isFetching) {
         return <Spinner />;
-    } else if (heroesLoadingStatus === "error") {
+    } else if ( isError) {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
@@ -72,7 +82,7 @@ const HeroesList = () => {
 
     }
 
-     const elements = renderHeroesList(heroes);
+    const elements = renderHeroesList(heroes);
     return (
         <ul>
             {elements}
