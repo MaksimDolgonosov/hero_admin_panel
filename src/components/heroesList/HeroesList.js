@@ -22,7 +22,7 @@ import { useMemo } from 'react';
 
 const HeroesList = () => {
 
-    const { data: heroes = [], isFetching, isLoading, isError } = useGetHeroesQuery();
+    const { data: heroes = [], isLoading, isError } = useGetHeroesQuery();
 
     const activeFilter = useSelector(state => state.filters.activeFilter);
 
@@ -61,7 +61,7 @@ const HeroesList = () => {
 
     // useEffect(() => {
     //     // dispatch(heroesFetching());
-    //     dispatch(fetchHeroes());
+    //    // dispatch(fetchHeroes());
     //     dispatch(filterHeroes())
     //     // request("http://localhost:3001/heroes")
     //     //     .then(data => dispatch(heroesFetched(data)))
@@ -74,7 +74,7 @@ const HeroesList = () => {
     //     // eslint-disable-next-line
     // }, []);
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
         return <Spinner />;
     } else if (isError) {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>

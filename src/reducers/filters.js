@@ -25,14 +25,16 @@ const filtersSlice = createSlice({
     name: "filters",
     initialState,
     reducers: {
-        filtersInForm: (state, action) => { state.filters = action.payload },
+        // filtersInForm: (state, action) => { state.filters = action.payload },
+        // activeFilter: (state, action) => { state.activeFilter = action.payload },
+        filtersInForm: (state, action) => { filterAdapter.setAll(state, action.payload) },
         activeFilter: (state, action) => { state.activeFilter = action.payload },
 
     },
     extraReducers: (builder) => {
         builder
             .addCase(filterHeroes.fulfilled, (state, action) => { filterAdapter.setAll(state, action.payload.slice(1)) })
-             //.addCase(filterHeroes.fulfilled, (state, action) => { state.filters = action.payload.slice(1) })
+            //.addCase(filterHeroes.fulfilled, (state, action) => { state.filters = action.payload.slice(1) })
             .addCase(filterHeroes.rejected, (state) => { state.filters = "no filter data" })
     }
 })
