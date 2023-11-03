@@ -6,8 +6,8 @@
 // Изменять json-файл для удобства МОЖНО!
 // Представьте, что вы попросили бэкенд-разработчика об этом
 import { useDispatch, useSelector } from "react-redux";
-import { heroesFetched } from "../../reducers/heroes";
-import { useHttp } from "../../hooks/http.hook";
+// import { heroesFetched } from "../../reducers/heroes";
+// import { useHttp } from "../../hooks/http.hook";
 //import { useState } from "react";
 import { activeFilter } from "../../reducers/filters";
 //const classNames = require('classnames');
@@ -15,24 +15,26 @@ import { activeFilter } from "../../reducers/filters";
 const HeroesFilters = () => {
     const currentFilter = useSelector(state => state.filters.activeFilter);
     const dispatch = useDispatch();
-    const { request } = useHttp();
+   // const { request } = useHttp();
     // const [active, setActive]= useState("all");
 
 
     const onFilter = (filterSelector) => {
-        dispatch(activeFilter(filterSelector));
-        request("http://localhost:3001/heroes")
-            .then(data => {
-                if (filterSelector === "all") {
-                    return data
-                } else {
-                    return data.filter(hero => {
-                        return hero.element === filterSelector;
-                    })
-                }
 
-            })
-            .then(data => dispatch(heroesFetched(data)))
+        
+        dispatch(activeFilter(filterSelector));
+        // request("http://localhost:3001/heroes")
+        //     .then(data => {
+        //         if (filterSelector === "all") {
+        //             return data
+        //         } else {
+        //             return data.filter(hero => {
+        //                 return hero.element === filterSelector;
+        //             })
+        //         }
+
+        //     })
+            //.then(data => dispatch(heroesFetched(data)))
     }
     // const btnActive = classNames({
     //     'active': activeButton === this.getAttribute("data-filter"),
