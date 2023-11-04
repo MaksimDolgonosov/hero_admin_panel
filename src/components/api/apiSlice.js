@@ -23,7 +23,8 @@ export const apiSlice = createApi({
                 method: "DELETE"
             }),
             invalidatesTags: ["Heroes"]
-        })
+        }),
+
     })
 })
 

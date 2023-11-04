@@ -3,11 +3,13 @@ import { object, string } from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 // eslint-disable-next-line
 import { heroesFetched, selectAll, heroesAdd } from "../../reducers/heroes";
-import { selectAll as selectAllFilters, filterHeroes } from "../../reducers/filters";
-import { useDispatch, useSelector } from "react-redux";
+//import { selectAll as selectAllFilters, filterHeroes } from "../../reducers/filters";
+//import { useDispatch, useSelector } from "react-redux";
 //import { useHttp } from "../../hooks/http.hook";
 import { useCreateHeroMutation } from "../api/apiSlice";
-import { useEffect } from "react";
+import { useGetFiltersQuery } from "../api/apiFilters";
+//import { useEffect } from "react";
+import { useMemo } from "react";
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -23,11 +25,13 @@ const HeroesAddForm = () => {
     // const heroes = useSelector(selectAll);
     //const heroes = useSelector(state => state.heroes.heroes);
     const [newHerroItem] = useCreateHeroMutation();
-    const filters = useSelector(selectAllFilters);
+    const { data: newFilters = [] } = useGetFiltersQuery();
+   // console.log(newFilters);
+    //const filters = useSelector(selectAllFilters);
     //const filters = selectAllFilters(store.getState());
     // const filters = useSelector(state => state.filters.filters);
     //const activeFilter = useSelector(state => state.filters.activeFilter);
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     // const { request } = useHttp();
 
     // const renderFilters = () => {
@@ -37,13 +41,13 @@ const HeroesAddForm = () => {
     //         return <option key={i} value={filter}>{filter}</option>
     //     })
 
-    useEffect(() => {
-        dispatch(filterHeroes())
-        // eslint-disable-next-line
-    }, []);
+    // useEffect(() => {
+    //     dispatch(filterHeroes())
+    //     // eslint-disable-next-line
+    // }, []);
 
 
-    const options = filters.map((filter, i) => {
+    const options = useMemo(() => newFilters.map((filter, i) => {
         switch (filter.name) {
             case "fire":
                 return (
@@ -66,7 +70,7 @@ const HeroesAddForm = () => {
         }
 
 
-    })
+    }),[newFilters])
 
 
     const formik = useFormik({
